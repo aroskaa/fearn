@@ -32,7 +32,7 @@ class AuthenticatedSessionController extends Controller
             return redirect()->intended(route('dashboard', absolute: false));
         }
 
-        return redirect()->intended(route('taman-wisata.index', absolute: false));
+        return redirect()->intended(route('welcome', absolute: false));
     }
 
     /**

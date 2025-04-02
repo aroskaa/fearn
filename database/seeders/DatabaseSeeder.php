@@ -18,20 +18,23 @@ class DatabaseSeeder extends Seeder
         // Create admin user
         User::factory()->create([
             'name' => 'Admin User',
-            'email' => 'admin@example.com',
+            'email' => 'admin@fearn.com',
             'role' => 'admin',
         ]);
 
         // Create regular user
         User::factory()->create([
             'name' => 'Regular User',
-            'email' => 'user@example.com',
+            'email' => 'user@fearn.com',
             'role' => 'user',
         ]);
 
+        // Seed categories, levels, courses, and lessons
         $this->call([
-            TamanWisataSeeder::class,
-            HeroSliderSeeder::class,
+            CategorySeeder::class,
+            LevelSeeder::class,
+            CourseSeeder::class,
+            LessonSeeder::class,
         ]);
     }
 }

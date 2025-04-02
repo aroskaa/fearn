@@ -13,12 +13,11 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @livewireStyles
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @if(!Auth::user()->role === 'admin')
-                @include('layouts.navigation')
-            @endif
+            <livewire:user-navbar />
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -30,9 +29,10 @@
             @endif
 
             <!-- Page Content -->
-            <main>
+            <main class="pt-16">
                 {{ $slot }}
             </main>
         </div>
+        @livewireScripts
     </body>
 </html>
