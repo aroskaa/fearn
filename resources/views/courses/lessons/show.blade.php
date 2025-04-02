@@ -7,13 +7,7 @@
                     <!-- Video Section -->
                     @if($lesson->video_url)
                         <div class="relative pb-[56.25%] bg-gray-900 rounded-lg overflow-hidden mb-8">
-                            <iframe 
-                                src="{{ $lesson->video_url }}" 
-                                class="absolute top-0 left-0 w-full h-full"
-                                frameborder="0" 
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                allowfullscreen>
-                            </iframe>
+                            <iframe src="{{ $lesson->embed_video_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="absolute top-0 left-0 w-full h-full rounded-lg"></iframe>
                         </div>
                     @endif
 
