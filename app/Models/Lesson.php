@@ -61,4 +61,31 @@ class Lesson extends Model
     {
         return $this->status === 'draft';
     }
+
+    public function getEmbedVideoUrlAttribute()
+    {
+        if (empty($this->video_url)) {
+            return null;
+        }
+
+        // Handle YouTube URLs
+        if (str_contains($this->video_url, 'youtube.com') || str_contains($this->video_url, 'youtu.be')) {
+            $videoId = null;
+            
+            // Handle full YouTube URLs
+            if (preg_match('/youtube\.com\/watch\?v=([^&]+)/', $this->video_url, $matches)) {
+                $videoId = $matches[1];
+            }
+            // Handle shortened youtu.be URLs
+            elseif (preg_match('/youtu\.be\/([^?]+)/', $this->video_url, $matches)) {
+                $videoId = $matches[1];
+            }
+
+            if ($videoId) {
+                return "https://www.youtube.com/embed/" . $videoId;
+            }
+        }
+
+        return $this->video_url;
+    }
 }

@@ -1,6 +1,6 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-center pt-12">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ $course->name }}
             </h2>
@@ -19,8 +19,8 @@
         </div>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+    <div class="">
+        <div class="max-w-7xl mx-auto sm:px-2 lg:px-8">
             @if (session('success'))
                 <div class="mb-4 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
@@ -76,7 +76,7 @@
                                                         <p class="text-sm text-gray-500">{{ Str::limit($lesson->description, 100) }}</p>
                                                     </div>
                                                     <div class="flex items-center space-x-2">
-                                                        <a href="#" class="text-indigo-600 hover:text-indigo-900">Edit</a>
+                                                        <a href="{{ route('admin.courses.lessons.edit', [$course, $lesson]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
                                                         <form action="#" method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')

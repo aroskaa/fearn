@@ -72,13 +72,15 @@
                         <div class="space-y-6">
                             <div>
                                 <h3 class="text-lg font-medium text-gray-900">{{ __('Video') }}</h3>
-                                @if($lesson->video_url)
-                                    <div class="mt-4 aspect-w-16 aspect-h-9">
-                                        <iframe src="{{ $lesson->video_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full rounded-lg"></iframe>
-                                    </div>
-                                @else
-                                    <p class="mt-4 text-sm text-gray-500">{{ __('No video available for this lesson.') }}</p>
-                                @endif
+                                <div class="mt-4 aspect-w-16 aspect-h-9">
+                                    @if($lesson->embed_video_url)
+                                        <iframe src="{{ $lesson->embed_video_url }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="w-full h-full rounded-lg"></iframe>
+                                    @else
+                                        <div class="flex items-center justify-center w-full h-full bg-gray-100 rounded-lg">
+                                            <p class="text-gray-500">No video available</p>
+                                        </div>
+                                    @endif
+                                </div>
                             </div>
 
                             <div>

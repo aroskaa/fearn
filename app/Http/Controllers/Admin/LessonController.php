@@ -54,7 +54,7 @@ class LessonController extends Controller
             'status' => $request->status,
         ]);
 
-        return redirect()->route('admin.courses.lessons.index', $course)
+        return redirect()->route('admin.courses.show', $course)
             ->with('success', 'Lesson created successfully.');
     }
 
