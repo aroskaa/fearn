@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\Category;
-use App\Models\Level;
+use App\Models\Enrollment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -64,7 +65,10 @@ class CourseController extends Controller
         }
 
         // Create enrollment
-        $user->courses()->attach($course->id, ['created_at' => now()]);
+        Enrollment::create([
+            'user_id' => $user->id,
+            'course_id' => $course->id,
+        ]);
 
         return redirect()->route('courses.show', $course)->with('success', 'Successfully enrolled in the course!');
     }
