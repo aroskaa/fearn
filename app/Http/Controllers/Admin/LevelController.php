@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
 use App\Models\Level;
+use App\Models\Course;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class LevelController extends Controller
 {
@@ -14,7 +15,8 @@ class LevelController extends Controller
     public function index()
     {
         $levels = Level::latest()->paginate(10);
-        return view('admin.levels.index', compact('levels'));
+        $courses = Course::all();
+        return view('admin.levels.index', compact('levels', 'courses'));
     }
 
     /**
@@ -32,7 +34,7 @@ class LevelController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:levels'],
-            'slug' => ['required', 'string', 'max:255', 'unique:levels'],
+            // 'slug' => ['required', 'string', 'max:255', 'unique:levels'],
         ]);
 
         Level::create($request->all());
@@ -64,7 +66,7 @@ class LevelController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:levels,name,' . $level->id],
-            'slug' => ['required', 'string', 'max:255', 'unique:levels,slug,' . $level->id],
+            // 'slug' => ['required', 'string', 'max:255', 'unique:levels,slug,' . $level->id],
         ]);
 
         $level->update($request->all());

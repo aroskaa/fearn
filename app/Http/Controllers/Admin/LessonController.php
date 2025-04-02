@@ -34,7 +34,7 @@ class LessonController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:lessons'],
+            // 'slug' => ['required', 'string', 'max:255', 'unique:lessons'],
             'description' => ['nullable', 'string'],
             'content' => ['nullable', 'string'],
             'video_url' => ['nullable', 'url'],
@@ -45,7 +45,7 @@ class LessonController extends Controller
 
         $lesson = $course->lessons()->create([
             'title' => $request->title,
-            'slug' => $request->slug,
+            // 'slug' => $request->slug,
             'description' => $request->description,
             'content' => $request->content,
             'video_url' => $request->video_url,
@@ -81,7 +81,7 @@ class LessonController extends Controller
     {
         $request->validate([
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:lessons,slug,' . $lesson->id],
+            // 'slug' => ['required', 'string', 'max:255', 'unique:lessons,slug,' . $lesson->id],
             'description' => ['nullable', 'string'],
             'content' => ['nullable', 'string'],
             'video_url' => ['nullable', 'url'],
@@ -92,7 +92,7 @@ class LessonController extends Controller
 
         $lesson->update([
             'title' => $request->title,
-            'slug' => $request->slug,
+            // 'slug' => $request->slug,
             'description' => $request->description,
             'content' => $request->content,
             'video_url' => $request->video_url,

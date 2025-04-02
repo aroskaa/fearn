@@ -3,8 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Database\Seeders\CategorySeeder;
+use Database\Seeders\LevelSeeder;
+use Database\Seeders\CourseSeeder;
+use Database\Seeders\LessonSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,8 +16,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
         // Create admin user
         User::factory()->create([
             'name' => 'Admin User',

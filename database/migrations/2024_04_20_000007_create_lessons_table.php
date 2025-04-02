@@ -11,7 +11,6 @@ return new class extends Migration
         Schema::create('lessons', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
-            $table->string('slug')->unique();
             $table->text('description')->nullable();
             $table->longText('content')->nullable();
             $table->string('video_url')->nullable();

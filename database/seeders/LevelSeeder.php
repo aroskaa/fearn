@@ -20,7 +20,6 @@ class LevelSeeder extends Seeder
         foreach ($levels as $level) {
             Level::create([
                 'name' => $level,
-                'slug' => Str::slug($level),
             ]);
         }
     }

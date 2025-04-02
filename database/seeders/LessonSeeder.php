@@ -65,7 +65,7 @@ class LessonSeeder extends Seeder
             foreach ($lessons as $lesson) {
                 Lesson::create([
                     'title' => $lesson['title'],
-                    'slug' => Str::slug($lesson['title']),
+                    // 'slug' => Str::slug($lesson['title']),
                     'description' => $lesson['description'],
                     'content' => $lesson['content'],
                     'video_url' => $lesson['video_url'],

@@ -15,6 +15,14 @@ class CourseSeeder extends Seeder
         $categories = Category::all();
         $levels = Level::all();
 
+        if ($categories->isEmpty()) {
+            throw new \Exception('No categories found. Make sure CategorySeeder ran successfully.');
+        }
+
+        if ($levels->isEmpty()) {
+            throw new \Exception('No levels found. Make sure LevelSeeder ran successfully.');
+        }
+
         $courses = [
             [
                 'title' => 'Complete Web Development Bootcamp',
@@ -63,7 +71,7 @@ class CourseSeeder extends Seeder
                 'title' => $course['title'],
                 'slug' => Str::slug($course['title']),
                 'description' => $course['description'],
-                'image' => 'courses/default.jpg', // You'll need to add actual images
+                'image' => 'courses/default.jpg',
                 'status' => $course['status'],
                 'category_id' => $categories->random()->id,
                 'level_id' => $levels->random()->id,

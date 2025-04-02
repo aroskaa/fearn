@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Course extends Model
 {
-    use HasFactory;
+    use HasFactory, HasUuids;
 
     /**
      * The attributes that are mass assignable.
@@ -25,10 +26,6 @@ class Course extends Model
         'level_id',
         'image',
         'status', // draft, published
-    ];
-
-    protected $casts = [
-        'price' => 'decimal:2',
     ];
 
     /**

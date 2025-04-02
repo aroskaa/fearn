@@ -18,11 +18,11 @@
                             <x-input-error class="mt-2" :messages="$errors->get('name')" />
                         </div>
 
-                        <div>
+                        {{-- <div>
                             <x-input-label for="slug" :value="__('Slug')" />
                             <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full" :value="old('slug')" required />
                             <x-input-error class="mt-2" :messages="$errors->get('slug')" />
-                        </div>
+                        </div> --}}
 
                         <div class="flex items-center gap-4">
                             <x-primary-button>{{ __('Create Level') }}</x-primary-button>
@@ -34,11 +34,11 @@
         </div>
     </div>
 
-    @push('scripts')
+    {{-- @push('scripts')
     <script>
         // Auto-generate slug from name
         const nameInput = document.getElementById('name');
-        const slugInput = document.getElementById('slug');
+        // const slugInput = document.getElementById('slug');
 
         nameInput.addEventListener('input', function() {
             slugInput.value = this.value
@@ -47,5 +47,5 @@
                 .replace(/\s+/g, '-');
         });
     </script>
-    @endpush
+    @endpush --}}
 </x-app-layout> 

@@ -40,7 +40,6 @@
                             <thead class="bg-gray-50">
                                 <tr>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Slug</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Courses</th>
                                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                                 </tr>
@@ -49,7 +48,7 @@
                                 @foreach($levels as $level)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">{{ $level->name }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap">{{ $level->slug }}</td>
+                                        {{-- <td class="px-6 py-4 whitespace-nowrap">{{ $level->slug }}</td> --}}
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{ $level->courses->count() }}
                                         </td>
