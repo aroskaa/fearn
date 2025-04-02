@@ -76,8 +76,9 @@
                                                         <p class="text-sm text-gray-500">{{ Str::limit($lesson->description, 100) }}</p>
                                                     </div>
                                                     <div class="flex items-center space-x-2">
+                                                        <a href="{{ route('admin.courses.lessons.show', [$course, $lesson]) }}" class="text-blue-600 hover:text-blue-900">View</a>
                                                         <a href="{{ route('admin.courses.lessons.edit', [$course, $lesson]) }}" class="text-indigo-600 hover:text-indigo-900">Edit</a>
-                                                        <form action="#" method="POST" class="inline">
+                                                        <form action="{{ route('admin.courses.lessons.destroy', [$course, $lesson]) }}" method="POST" class="inline">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this lesson?')">
@@ -93,7 +94,7 @@
                                     @endif
 
                                     <div class="mt-4">
-                                        <a href="#" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:border-indigo-900 focus:ring ring-indigo-300 disabled:opacity-25 transition">
+                                        <a href="{{ route('admin.courses.lessons.create', $course) }}" class="inline-flex items-center px-4 py-2 bg-indigo-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-indigo-700 active:bg-indigo-900 focus:outline-none focus:border-indigo-900 focus:ring ring-indigo-300 disabled:opacity-25 transition">
                                             Add New Lesson
                                         </a>
                                     </div>
@@ -101,18 +102,20 @@
                             </div>
 
                             <div>
-                                <h3 class="text-lg font-semibold text-gray-900">Recent Enrollments</h3>
+                                <h3 class="text-lg font-semibold text-gray-900">Enrollment Statistics</h3>
                                 <div class="mt-4">
                                     @if($course->enrollments->count() > 0)
-                                        <div class="space-y-4">
-                                            @foreach($course->enrollments->take(5) as $enrollment)
-                                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                                                    <div>
-                                                        <h4 class="font-medium text-gray-900">{{ $enrollment->user->name }}</h4>
-                                                        <p class="text-sm text-gray-500">Enrolled on {{ $enrollment->created_at->format('M d, Y') }}</p>
-                                                    </div>
+                                        <div class="bg-gray-50 rounded-lg p-4">
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <p class="text-sm text-gray-500">Total Enrollments</p>
+                                                    <p class="text-2xl font-semibold text-gray-900">{{ $course->enrollments->count() }}</p>
                                                 </div>
-                                            @endforeach
+                                                <div>
+                                                    <p class="text-sm text-gray-500">Latest Enrollment</p>
+                                                    <p class="text-gray-700">{{ $course->enrollments->sortByDesc('created_at')->first()->created_at->format('M d, Y') }}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     @else
                                         <p class="text-gray-500">No enrollments yet.</p>
