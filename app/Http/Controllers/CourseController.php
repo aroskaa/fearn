@@ -33,7 +33,9 @@ class CourseController extends Controller
     
     public function show(Course $course)
     {
-        $course->load(['category', 'level', 'lessons']);
+        $course->load(['category', 'level', 'lessons' => function($query) {
+            $query->orderBy('order');
+        }]);
         return view('courses.show', compact('course'));
     }
     
@@ -41,5 +43,18 @@ class CourseController extends Controller
     {
         $enrolledCourses = Auth::user()->enrollments()->with('course')->paginate(12);
         return view('courses.my-courses', compact('enrolledCourses'));
+    }
+
+    public function enroll(Course $course)
+    {
+        // Check if user is already enrolled
+        if (Auth::user()->courses->contains($course)) {
+            return redirect()->back()->with('error', 'You are already enrolled in this course.');
+        }
+
+        // Create enrollment
+        Auth::user()->courses()->attach($course->id);
+
+        return redirect()->route('courses.show', $course)->with('success', 'Successfully enrolled in the course!');
     }
 } 
