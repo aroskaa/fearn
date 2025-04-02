@@ -17,7 +17,6 @@ Route::get('/', function () {
 // Public Course Routes
 Route::get('/courses', [PublicCourseController::class, 'index'])->name('courses.index');
 Route::get('/courses/{course}', [PublicCourseController::class, 'show'])->name('courses.show');
-Route::get('/my-courses', [PublicCourseController::class, 'myCourses'])->name('my-courses');
 
 // Auth Routes
 Route::middleware(['auth'])->group(function () {
@@ -29,8 +28,10 @@ Route::middleware(['auth'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     
-    // Course enrollment
-    Route::post('/courses/{course}/enroll', [CourseController::class, 'enroll'])->name('courses.enroll');
+    // Course related authenticated routes
+    Route::get('/my-courses', [PublicCourseController::class, 'myCourses'])->name('my-courses');
+    Route::post('/courses/{course}/enroll', [PublicCourseController::class, 'enroll'])->name('courses.enroll');
+    Route::get('/courses/{course}/lessons/{lesson}', [PublicCourseController::class, 'showLesson'])->name('courses.lessons.show');
 });
 
 // Admin Routes

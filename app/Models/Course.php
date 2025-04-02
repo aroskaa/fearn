@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Course extends Model
 {
@@ -77,5 +78,20 @@ class Course extends Model
     public function isPublished(): bool
     {
         return $this->status === 'published';
+    }
+
+    /**
+     * Get the image URL for the course.
+     */
+    protected function image(): Attribute
+    {
+        return Attribute::make(
+            get: function ($value) {
+                if (!$value || $value === 'courses/default.jpg') {
+                    return 'courses/default.jpg';
+                }
+                return $value;
+            }
+        );
     }
 }
