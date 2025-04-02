@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Edit Course') }}: {{ $course->name }}
+                {{ __('Edit Course') }}: {{ $course->title }}
             </h2>
         </div>
     </x-slot>
@@ -61,17 +61,34 @@
                             </div>
                         </div>
 
+                        <!-- Image Upload with Simple Preview -->
                         <div>
-                            <x-input-label for="image" :value="__('Course Image')" />
-                            @if($course->image)
-                                <div class="mt-2">
-                                    <img src="{{ Storage::url($course->image) }}" alt="{{ $course->name }}" class="w-48 h-auto rounded">
-                                </div>
-                            @endif
-                            <input type="file" id="image" name="image" accept="image/*" class="mt-2 block w-full">
-                            <div class="mt-2 text-sm text-gray-500">
-                                Leave empty to keep the current image. Recommended size: 1280x720 pixels (16:9 ratio)
+                            <x-input-label for="image" :value="__('Course Image')" class="mb-2" />
+                            
+                            <!-- Current image -->
+                            <div id="currentImageContainer" class="mb-3">
+                                <img src="{{ asset('storage/' . $course->image) }}" alt="{{ $course->title }}" class="w-48 h-auto rounded border border-gray-200">
+                                <p class="text-sm text-gray-600 mt-1">Current image</p>
                             </div>
+                            
+                            <!-- New image preview (initially hidden) -->
+                            <div id="previewContainer" style="display: none" class="mb-3">
+                                <img id="previewImage" src="#" alt="Preview" class="w-48 h-auto rounded border border-gray-200">
+                                <p class="text-sm text-gray-600 mt-1">New image</p>
+                                <button type="button" onclick="removeImage()" class="text-xs bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded mt-2">Remove</button>
+                            </div>
+                            
+                            <!-- File input -->
+                            <input type="file" id="image" name="image" accept="image/*" onchange="previewFile()"
+                                class="block w-full text-sm text-gray-500
+                                file:mr-4 file:py-2 file:px-4
+                                file:rounded-md file:border-0
+                                file:text-sm file:font-semibold
+                                file:bg-blue-50 file:text-blue-700
+                                hover:file:bg-blue-100">
+                                    
+                            <p class="mt-1 text-xs text-gray-500">Upload a new image or leave empty to keep the current one</p>
+                            
                             <x-input-error class="mt-2" :messages="$errors->get('image')" />
                         </div>
 
@@ -98,37 +115,37 @@
 
     @push('scripts')
     <script>
-        // Auto-generate slug from name
-        document.getElementById('title').addEventListener('input', function() {
-            let slug = this.value
-                .toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-');
-            document.getElementById('slug').value = slug;
-        });
-
-        // Preview image before upload
-        document.getElementById('image').addEventListener('change', function(e) {
-            if (this.files && this.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    let preview = document.createElement('img');
-                    preview.src = e.target.result;
-                    preview.className = 'mt-2 w-48 h-auto rounded';
-                    let container = document.getElementById('image').parentNode;
-                    let existingPreview = container.querySelector('img:not([src^="data:"])');
-                    if (existingPreview) {
-                        existingPreview.style.display = 'none';
-                    }
-                    let newPreview = container.querySelector('img[src^="data:"]');
-                    if (newPreview) {
-                        container.removeChild(newPreview);
-                    }
-                    container.insertBefore(preview, document.getElementById('image').nextSibling);
-                }
-                reader.readAsDataURL(this.files[0]);
+        // // Auto-generate slug from title
+        // document.getElementById('title').addEventListener('input', function() {
+        //     let slug = this.value
+        //         .toLowerCase()
+        //         .replace(/[^\w\s-]/g, '')
+        //         .replace(/\s+/g, '-');
+        //     document.getElementById('slug').value = slug;
+        // });
+    
+        // Simple inline image preview functions
+        function previewFile() {
+            const preview = document.getElementById('previewImage');
+            const file = document.getElementById('image').files[0];
+            const reader = new FileReader();
+            
+            reader.onloadend = function() {
+                preview.src = reader.result;
+                document.getElementById('previewContainer').style.display = 'block';
+                document.getElementById('currentImageContainer').style.opacity = '0.5';
             }
-        });
+            
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+        
+        function removeImage() {
+            document.getElementById('image').value = '';
+            document.getElementById('previewContainer').style.display = 'none';
+            document.getElementById('currentImageContainer').style.opacity = '1';
+        }
     </script>
     @endpush
-</x-app-layout> 
+</x-app-layout>

@@ -16,7 +16,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('admin.courses.lessons.update', [$course, $lesson]) }}" method="POST" class="space-y-6">
+                    <form action="{{ route('admin.courses.lessons.update', [$course, $lesson]) }}" method="POST" class="space-y-6" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
@@ -26,11 +26,11 @@
                             <x-input-error class="mt-2" :messages="$errors->get('title')" />
                         </div>
 
-                        <div>
+                        {{-- <div>
                             <x-input-label for="slug" :value="__('Slug')" />
                             <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full" :value="old('slug', $lesson->slug)" required />
                             <x-input-error class="mt-2" :messages="$errors->get('slug')" />
-                        </div>
+                        </div> --}}
 
                         <div>
                             <x-input-label for="description" :value="__('Short Description')" />
@@ -91,13 +91,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"></script>
     <script>
         // Auto-generate slug from title
-        document.getElementById('title').addEventListener('input', function() {
-            let slug = this.value
-                .toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-');
-            document.getElementById('slug').value = slug;
-        });
+        // document.getElementById('title').addEventListener('input', function() {
+        //     let slug = this.value
+        //         .toLowerCase()
+        //         .replace(/[^\w\s-]/g, '')
+        //         .replace(/\s+/g, '-');
+        //     document.getElementById('slug').value = slug;
+        // });
 
         tinymce.init({
             selector: '#content',

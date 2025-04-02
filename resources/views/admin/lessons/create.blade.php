@@ -89,14 +89,14 @@
     @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.3/tinymce.min.js"></script>
     <script>
-        // Auto-generate slug from title
-        document.getElementById('title').addEventListener('input', function() {
-            let slug = this.value
-                .toLowerCase()
-                .replace(/[^\w\s-]/g, '')
-                .replace(/\s+/g, '-');
-            document.getElementById('slug').value = slug;
-        });
+        // // Auto-generate slug from title
+        // document.getElementById('title').addEventListener('input', function() {
+        //     let slug = this.value
+        //         .toLowerCase()
+        //         .replace(/[^\w\s-]/g, '')
+        //         .replace(/\s+/g, '-');
+        //     document.getElementById('slug').value = slug;
+        // });
 
         tinymce.init({
             selector: '#content',

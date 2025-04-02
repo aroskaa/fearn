@@ -32,7 +32,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <!-- Course Image and Basic Info -->
                         <div class="md:col-span-1">
-                            <img src="{{ Storage::url($course->image) }}" alt="{{ $course->title }}" class="w-full rounded-lg shadow-md">
+                            <img src="{{ asset('storage/' . $course->image) }}" alt="{{ $course->title }}" class="w-full rounded-lg shadow-md">
                             <div class="mt-4 space-y-2">
                                 <div class="flex items-center justify-between">
                                     <span class="text-gray-600">Status:</span>

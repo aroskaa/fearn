@@ -40,12 +40,11 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:courses'],
+            'title' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255', 'unique:courses'],
             'description' => ['required', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
             'level_id' => ['required', 'exists:levels,id'],
-            'price' => ['required', 'numeric', 'min:0'],
             'image' => ['required', 'image', 'max:2048'], // 2MB max
             'status' => ['required', 'in:draft,published'],
         ]);
@@ -53,12 +52,11 @@ class CourseController extends Controller
         $imagePath = $request->file('image')->store('courses', 'public');
 
         Course::create([
-            'name' => $request->name,
+            'title' => $request->title,
             'slug' => $request->slug,
             'description' => $request->description,
             'category_id' => $request->category_id,
             'level_id' => $request->level_id,
-            'price' => $request->price,
             'image' => $imagePath,
             'status' => $request->status,
         ]);
@@ -93,12 +91,11 @@ class CourseController extends Controller
     public function update(Request $request, Course $course)
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:courses,name,' . $course->id],
+            'title' => ['required', 'string', 'max:255', 'unique:courses,title,' . $course->id],
             'slug' => ['required', 'string', 'max:255', 'unique:courses,slug,' . $course->id],
             'description' => ['required', 'string'],
             'category_id' => ['required', 'exists:categories,id'],
             'level_id' => ['required', 'exists:levels,id'],
-            'price' => ['required', 'numeric', 'min:0'],
             'image' => ['nullable', 'image', 'max:2048'], // 2MB max
             'status' => ['required', 'in:draft,published'],
         ]);

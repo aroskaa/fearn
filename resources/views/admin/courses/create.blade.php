@@ -62,9 +62,23 @@
 
                         <div>
                             <x-input-label for="image" :value="__('Course Image')" />
-                            <input type="file" id="image" name="image" accept="image/*" class="mt-1 block w-full" required>
-                            <div class="mt-2 text-sm text-gray-500">
-                                Recommended size: 1280x720 pixels (16:9 ratio)
+                            <div class="mt-2">
+                                <input type="file" id="image" name="image" class="block w-full text-sm text-gray-500
+                                    file:mr-4 file:py-2 file:px-4
+                                    file:rounded-md file:border-0
+                                    file:text-sm file:font-semibold
+                                    file:bg-blue-50 file:text-blue-700
+                                    hover:file:bg-blue-100"
+                                    accept="image/*" 
+                                    onchange="document.getElementById('preview').src=window.URL.createObjectURL(this.files[0]);document.getElementById('preview-container').classList.remove('hidden');" />
+                                    
+                                <div id="preview-container" class="mt-3 hidden">
+                                    <img id="preview" class="h-48 w-auto object-cover rounded-lg border border-gray-200" />
+                                    <button type="button" onclick="document.getElementById('image').value='';document.getElementById('preview-container').classList.add('hidden');" 
+                                            class="mt-2 text-xs text-red-600 hover:text-red-800">
+                                        Remove image
+                                    </button>
+                                </div>
                             </div>
                             <x-input-error class="mt-2" :messages="$errors->get('image')" />
                         </div>
@@ -92,7 +106,7 @@
 
     @push('scripts')
     <script>
-        // Auto-generate slug from name
+        // Auto-generate slug from title
         document.getElementById('title').addEventListener('input', function() {
             let slug = this.value
                 .toLowerCase()
@@ -101,24 +115,36 @@
             document.getElementById('slug').value = slug;
         });
 
-        // Preview image before upload
-        document.getElementById('image').addEventListener('change', function(e) {
-            if (this.files && this.files[0]) {
-                let reader = new FileReader();
-                reader.onload = function(e) {
-                    let preview = document.createElement('img');
-                    preview.src = e.target.result;
-                    preview.className = 'mt-2 w-full max-w-xs rounded';
-                    let container = document.getElementById('image').parentNode;
-                    let existingPreview = container.querySelector('img');
-                    if (existingPreview) {
-                        container.removeChild(existingPreview);
-                    }
-                    container.appendChild(preview);
-                }
-                reader.readAsDataURL(this.files[0]);
-            }
-        });
+        // Preview image function
+        // function previewImage(input) {
+        //     const preview = document.getElementById('imagePreview');
+        //     const image = preview.querySelector('img');
+            
+        //     if (input.files && input.files[0]) {
+        //         const reader = new FileReader();
+                
+        //         reader.onload = function(e) {
+        //             image.src = e.target.result;
+        //             preview.classList.remove('hidden');
+        //         }
+                
+        //         reader.readAsDataURL(input.files[0]);
+        //     }
+        // }
+        
+        // // Remove preview function
+        // function removePreview() {
+        //     const preview = document.getElementById('imagePreview');
+        //     const image = preview.querySelector('img');
+        //     const fileInput = document.getElementById('image');
+            
+        //     // Clear the file input
+        //     fileInput.value = '';
+        //     // Clear the image src
+        //     image.src = '';
+        //     // Hide the preview
+        //     preview.classList.add('hidden');
+        // }
     </script>
     @endpush
-</x-app-layout> 
+</x-app-layout>

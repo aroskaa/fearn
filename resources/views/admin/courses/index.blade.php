@@ -51,7 +51,7 @@
                                 @foreach($courses as $course)
                                     <tr>
                                         <td class="px-6 py-4 whitespace-nowrap">
-                                            <img src="{{ Storage::url($course->image) }}" alt="{{ $course->title }}" class="h-12 w-16 object-cover rounded">
+                                            <img src="{{ asset('storage/' . $course->image) }}" alt="{{ $course->title }}" class="h-12 w-16 object-cover rounded">
                                         </td>
                                         <td class="px-6 py-4">
                                             <div class="text-sm font-medium text-gray-900">{{ $course->title }}</div>
