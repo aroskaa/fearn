@@ -5,8 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}" class="text-xl font-bold">
-                        Course Platform
+                    <a href="{{ route('welcome') }}" class="text-xl font-bold">
+                        Fearn.
                     </a>
                 </div>
 
