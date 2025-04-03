@@ -61,24 +61,26 @@
                             </div>
                         </div>
 
-                        <!-- Image Upload with Simple Preview -->
+                        <!-- Image Upload with Preview -->
                         <div>
                             <x-input-label for="image" :value="__('Course Image')" class="mb-2" />
                             
-                            <!-- Current image -->
-                            <div id="currentImageContainer" class="mb-3">
-                                <img src="{{ asset('storage/' . $course->image) }}" alt="{{ $course->title }}" class="w-48 h-auto rounded border border-gray-200">
+                            <!-- Current Image -->
+                            <div id="currentImageContainer" class="mb-3" style="{{ $course->image ? '' : 'display: none' }}">
+                                <img id="currentImage" src="{{ asset('storage/' . $course->image) }}" 
+                                    alt="{{ $course->title }}" 
+                                    class="w-48 h-auto rounded border border-gray-200">
                                 <p class="text-sm text-gray-600 mt-1">Current image</p>
                             </div>
-                            
-                            <!-- New image preview (initially hidden) -->
+                        
+                            <!-- New Image Preview -->
                             <div id="previewContainer" style="display: none" class="mb-3">
                                 <img id="previewImage" src="#" alt="Preview" class="w-48 h-auto rounded border border-gray-200">
                                 <p class="text-sm text-gray-600 mt-1">New image</p>
                                 <button type="button" onclick="removeImage()" class="text-xs bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded mt-2">Remove</button>
                             </div>
-                            
-                            <!-- File input -->
+                        
+                            <!-- File Input -->
                             <input type="file" id="image" name="image" accept="image/*" onchange="previewFile()"
                                 class="block w-full text-sm text-gray-500
                                 file:mr-4 file:py-2 file:px-4
@@ -88,7 +90,7 @@
                                 hover:file:bg-blue-100">
                                     
                             <p class="mt-1 text-xs text-gray-500">Upload a new image or leave empty to keep the current one</p>
-                            
+                        
                             <x-input-error class="mt-2" :messages="$errors->get('image')" />
                         </div>
 
@@ -113,39 +115,34 @@
         </div>
     </div>
 
-    @push('scripts')
+    {{-- @push('scripts') --}}
     <script>
-        // // Auto-generate slug from title
-        // document.getElementById('title').addEventListener('input', function() {
-        //     let slug = this.value
-        //         .toLowerCase()
-        //         .replace(/[^\w\s-]/g, '')
-        //         .replace(/\s+/g, '-');
-        //     document.getElementById('slug').value = slug;
-        // });
-    
-        // Simple inline image preview functions
         function previewFile() {
-            const preview = document.getElementById('previewImage');
-            const file = document.getElementById('image').files[0];
-            const reader = new FileReader();
-            
-            reader.onloadend = function() {
-                preview.src = reader.result;
-                document.getElementById('previewContainer').style.display = 'block';
-                document.getElementById('currentImageContainer').style.opacity = '0.5';
-            }
-            
+         
+            const fileInput = document.getElementById('image');
+            const file = fileInput.files[0];
+            const previewContainer = document.getElementById('previewContainer');
+            const previewImage = document.getElementById('previewImage');
+            const currentImageContainer = document.getElementById('currentImageContainer');
+
             if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                    previewContainer.style.display = 'block';
+                    if (currentImageContainer) currentImageContainer.style.display = 'none';
+                };
                 reader.readAsDataURL(file);
+            } else {
+                removeImage();
             }
         }
-        
+
         function removeImage() {
             document.getElementById('image').value = '';
             document.getElementById('previewContainer').style.display = 'none';
-            document.getElementById('currentImageContainer').style.opacity = '1';
+            document.getElementById('currentImageContainer').style.display = 'block';
         }
     </script>
-    @endpush
+    {{-- @endpush --}}
 </x-app-layout>
